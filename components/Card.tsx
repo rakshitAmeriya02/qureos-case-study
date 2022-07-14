@@ -1,4 +1,5 @@
 import { Book } from "interfaces";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { formatCurrency, getFormattedDate } from "utils/helpers";
 import BookIcon from "./BookIcon";
@@ -8,9 +9,13 @@ interface CardProps {
 }
 
 const Card = ({ book }: CardProps) => {
+  const router = useRouter();
+  const handleReadMore = () => {
+    router.push(encodeURI(book.title));
+  };
   const [showErrorImg, setShowErrorImg] = useState(false);
   return (
-    <div className="flex flex-col mx-4 mb-4 overflow-hidden rounded-lg shadow-lg sm:max-w-xs">
+    <div className="flex flex-col mx-4 mb-4 overflow-hidden rounded-lg shadow-lg sm:max-w-xs ">
       {book.thumbnailUrl && !showErrorImg ? (
         <img
           className="flex-1 block w-full h-auto rounded-t-lg"
@@ -50,7 +55,10 @@ const Card = ({ book }: CardProps) => {
           </p>
         </div>
       </div>
-      <button className="px-4 py-2 mx-4 mb-4 font-semibold text-gray-700 bg-transparent border border-gray-500 rounded hover:bg-gray-500 hover:text-white hover:border-transparent">
+      <button
+        onClick={handleReadMore}
+        className="px-4 py-2 mx-4 mb-4 font-semibold text-gray-700 bg-transparent border border-gray-500 rounded hover:bg-gray-500 hover:text-white hover:border-transparent"
+      >
         Read More
       </button>
     </div>

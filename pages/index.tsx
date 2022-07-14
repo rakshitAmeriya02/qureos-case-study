@@ -1,13 +1,23 @@
 import { Book } from "interfaces";
 import Card from "components/Card";
 import { fetchData } from "utils/helpers";
+import { useEffect } from "react";
+import { LOCAL_STORAGE } from "utils/constant";
 
 interface HomeProps {
   books: Book[] | null;
 }
 
 const Home = ({ books }: HomeProps) => {
-  console.log('books', books)
+  useEffect(() => {
+    if (window) {
+      const booksData = localStorage.getItem(LOCAL_STORAGE.BOOKS_DATA);
+      if (!booksData) {
+        localStorage.setItem(LOCAL_STORAGE.BOOKS_DATA, JSON.stringify(books));
+      }
+    }
+  }, []);
+
   return (
     <div className="p-4">
       <div className="grid xs:grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
