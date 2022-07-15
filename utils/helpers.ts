@@ -44,3 +44,27 @@ export const formatCurrency = (
     minimumFractionDigits: decimal,
   });
 };
+
+const cloneJSON = (value: string | null) => {
+  if (value) {
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      console.log("ERROR:", { error });
+      return null;
+    }
+  }
+  return null;
+};
+
+export const extractJSON = (key: string) => {
+  const value = localStorage.getItem(key);
+  return cloneJSON(value);
+};
+
+export const saveJSON = (key: string, value: any) => {
+  if (typeof value !== "string") {
+    value = JSON.stringify(value);
+  }
+  localStorage.setItem(key, value);
+};
