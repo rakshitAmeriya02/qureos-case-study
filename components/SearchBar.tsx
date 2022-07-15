@@ -33,7 +33,9 @@ const SearchBar = () => {
             .filter((item) => {
               const searchString = `${item.title.toLocaleLowerCase()} ${item.authors
                 .join(" ")
-                .toLocaleLowerCase()} ${item.isbn}`;
+                .toLocaleLowerCase()} ${item.isbn} ${item.categories
+                .join(" ")
+                .toLocaleLowerCase()} ${item.published.price || ""}`;
               return searchString.includes(inputValue);
             })
             .map((item) => ({
@@ -65,7 +67,7 @@ const SearchBar = () => {
         : undefined;
       router.replace(
         {
-          pathname: "/",
+          pathname: window.location.pathname,
           query,
         },
         undefined,
@@ -79,7 +81,7 @@ const SearchBar = () => {
   const customStyles: StylesConfig<BookOption, false> = {
     container: (base) => ({
       ...base,
-      width: '100%',
+      width: "100%",
       maxWidth: 300,
     }),
     input: (base) => ({

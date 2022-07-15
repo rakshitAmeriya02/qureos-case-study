@@ -68,3 +68,10 @@ export const saveJSON = (key: string, value: any) => {
   }
   localStorage.setItem(key, value);
 };
+
+type className = string | boolean;
+
+export const clsx = (...args: className[]) => {
+  const classes = args.filter((value) => value).join(" ");
+  return classes;
+};

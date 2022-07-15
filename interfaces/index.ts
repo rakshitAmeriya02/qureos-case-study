@@ -16,3 +16,7 @@ export interface Book {
   authors: string[];
   categories: string[];
 }
+
+export interface BooksCache {
+  [page: number]: Book[] | null;
+}

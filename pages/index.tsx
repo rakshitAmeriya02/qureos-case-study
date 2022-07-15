@@ -4,11 +4,13 @@ import Card from "components/Card";
 import Layout from "components/Layout";
 import Loader from "components/Loader";
 import { useBooks } from "hooks/useBooks";
+import Pagination from "./Pagination";
 
 const Home = () => {
   const router = useRouter();
   const query = (router.query.query || "") as string;
-  const books = useBooks();
+  const [books, totalPages] = useBooks();
+  const page = router.query.page ? Number(router.query.page) : 1;
 
   const filteredBooks = useMemo(() => {
     if (books) {
@@ -17,7 +19,9 @@ const Home = () => {
         return books.filter((item) => {
           const searchString = `${item.title.toLocaleLowerCase()} ${item.authors
             .join(" ")
-            .toLocaleLowerCase()} ${item.isbn}`;
+            .toLocaleLowerCase()} ${item.isbn} ${item.categories
+            .join(" ")
+            .toLocaleLowerCase()} ${item.published.price || ""}`;
           return searchString.includes(searchInput);
         });
       }
@@ -42,6 +46,9 @@ const Home = () => {
         <div className="container flex items-center justify-center h-full mx-auto">
           <h2 className="mb-2 text-xl font-bold">No Books found</h2>
         </div>
+      )}
+      {query || totalPages < 1 ? null : (
+        <Pagination activePage={page} totalPages={1} />
       )}
     </Layout>
   );

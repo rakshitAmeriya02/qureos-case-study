@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 
 const BookDetail = () => {
   const router = useRouter();
-  const books = useBooks();
+  const [books] = useBooks();
   const [showErrorImg, setShowErrorImg] = useState(false);
   const title = router.query.title || "";
 
