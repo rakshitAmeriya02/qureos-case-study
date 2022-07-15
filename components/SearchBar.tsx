@@ -1,7 +1,7 @@
 import { Book } from "interfaces";
 import { useRouter } from "next/router";
 import { useRef } from "react";
-import { SingleValue, StylesConfig } from "react-select";
+import { InputActionMeta, SingleValue, StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
 import { LOCAL_STORAGE } from "utils/constant";
 import { extractJSON, fetchData } from "utils/helpers";
@@ -14,6 +14,7 @@ interface BookOption {
 const SearchBar = () => {
   const router = useRouter();
   const timoutRef = useRef<NodeJS.Timeout | null>(null);
+  const inputValue = decodeURI((router.query.query as string) || "");
 
   const loadOptions = (inputValue: string): Promise<BookOption[]> => {
     return new Promise((resolve) => {
@@ -55,14 +56,34 @@ const SearchBar = () => {
     }
   };
 
+  const handleInputChange = (newValue: string, meta: InputActionMeta) => {
+    if (meta.action === "input-change") {
+      const query = newValue.trim()
+        ? {
+            query: encodeURI(newValue),
+          }
+        : undefined;
+      router.replace(
+        {
+          pathname: "/",
+          query,
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      );
+    }
+  };
+
   const customStyles: StylesConfig<BookOption, false> = {
     container: (base) => ({
       ...base,
-      width: 340,
+      width: '100%',
+      maxWidth: 300,
     }),
     input: (base) => ({
       ...base,
-      height: 45,
       color: "#000000",
       padding: "6px 10px",
     }),
@@ -79,15 +100,16 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
-      <AsyncSelect
-        cacheOptions
-        loadOptions={loadOptions}
-        onChange={handleChange}
-        styles={customStyles}
-        placeholder="Search Books..."
-      />
-    </div>
+    <AsyncSelect
+      cacheOptions
+      inputValue={inputValue}
+      loadOptions={loadOptions}
+      onChange={handleChange}
+      styles={customStyles}
+      placeholder="Search Books..."
+      isClearable
+      onInputChange={handleInputChange}
+    />
   );
 };
 

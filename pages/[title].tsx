@@ -1,41 +1,19 @@
 import BookIcon from "components/BookIcon";
 import Layout from "components/Layout";
 import Loader from "components/Loader";
-import { Book } from "interfaces";
+import { useBooks } from "hooks/useBooks";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-import { LOCAL_STORAGE } from "utils/constant";
-import { extractJSON, fetchData, saveJSON } from "utils/helpers";
+import { useMemo, useState } from "react";
 
 const BookDetail = () => {
   const router = useRouter();
-  const [books, setBooks] = useState<Book[] | null>(null);
+  const books = useBooks();
   const [showErrorImg, setShowErrorImg] = useState(false);
   const title = router.query.title || "";
 
   const bookDetail = useMemo(() => {
     return books?.find((book) => book.title === (title as string)) || null;
   }, [books, title]);
-
-  useEffect(() => {
-    const fetchBooksData = async () => {
-      const books = await fetchData(
-        "https://run.mocky.io/v3/d7f02fdc-5591-4080-a163-95a08ce6895e"
-      );
-      if (books) {
-        saveJSON(LOCAL_STORAGE.BOOKS_DATA, books);
-        setBooks(books);
-      }
-    };
-    if (window) {
-      const books = extractJSON(LOCAL_STORAGE.BOOKS_DATA);
-      if (books) {
-        setBooks(books);
-      } else {
-        fetchBooksData();
-      }
-    }
-  }, []);
 
   const handleHomeRedirection = () => {
     router.push("/");

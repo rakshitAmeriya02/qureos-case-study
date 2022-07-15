@@ -1,35 +1,40 @@
-import { Book } from "interfaces";
+import { useMemo } from "react";
+import { useRouter } from "next/router";
 import Card from "components/Card";
-import { extractJSON, fetchData, saveJSON } from "utils/helpers";
-import { useEffect } from "react";
-import { LOCAL_STORAGE } from "utils/constant";
 import Layout from "components/Layout";
 import Loader from "components/Loader";
+import { useBooks } from "hooks/useBooks";
 
-interface HomeProps {
-  books: Book[] | null;
-}
+const Home = () => {
+  const router = useRouter();
+  const query = (router.query.query || "") as string;
+  const books = useBooks();
 
-const Home = ({ books }: HomeProps) => {
-  useEffect(() => {
-    if (window) {
-      const booksData = extractJSON(LOCAL_STORAGE.BOOKS_DATA);
-      if (!booksData) {
-        saveJSON(LOCAL_STORAGE.BOOKS_DATA, books);
+  const filteredBooks = useMemo(() => {
+    if (books) {
+      const searchInput = query.trim();
+      if (searchInput) {
+        return books.filter((item) => {
+          const searchString = `${item.title.toLocaleLowerCase()} ${item.authors
+            .join(" ")
+            .toLocaleLowerCase()} ${item.isbn}`;
+          return searchString.includes(searchInput);
+        });
       }
     }
-  }, []);
+    return books;
+  }, [books, query]);
 
   return (
     <Layout>
-      {!books ? (
+      {!filteredBooks ? (
         <Loader
           descriptionText="It might take a while"
           titleText="Fetching Books Data"
         />
-      ) : books.length ? (
-        <div className="grid xs:grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {books.map((item, index) => (
+      ) : filteredBooks.length ? (
+        <div className="grid mx-auto xs:grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:container">
+          {filteredBooks.map((item, index) => (
             <Card key={`book-${index + 1}`} book={item} />
           ))}
         </div>
@@ -40,18 +45,6 @@ const Home = ({ books }: HomeProps) => {
       )}
     </Layout>
   );
-};
-
-export const getStaticProps = async () => {
-  let books: Book[] | null = null;
-  books = await fetchData(
-    "https://run.mocky.io/v3/d7f02fdc-5591-4080-a163-95a08ce6895e"
-  );
-  return {
-    props: {
-      books,
-    },
-  };
 };
 
 export default Home;

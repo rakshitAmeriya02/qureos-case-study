@@ -9,7 +9,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex flex-col h-full">
       <HeaderBar />
-      <div className="flex-1 p-4">{children}</div>
+      <div className="flex-1 p-4 overflow-y-auto">{children}</div>
     </div>
   );
 };

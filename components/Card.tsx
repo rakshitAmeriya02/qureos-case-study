@@ -38,7 +38,7 @@ const Card = ({ book }: CardProps) => {
         <h4 className="mb-4 overflow-hidden leading-normal text-gray-700 text-md text-ellipsis whitespace-nowrap">
           {book.authors.join(", ")}
         </h4>
-        <div className="flex justify-between">
+        <div className="flex flex-wrap justify-between">
           <h4 className="mb-3 font-semibold tracking-tight text-gray-600 text-md">
             Pusblished
           </h4>
@@ -46,7 +46,7 @@ const Card = ({ book }: CardProps) => {
             {getFormattedDate(book.published.$date)}
           </p>
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-wrap justify-between">
           <h4 className="mb-3 font-semibold tracking-tight text-gray-600 text-md">
             Price
           </h4>
