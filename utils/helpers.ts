@@ -1,3 +1,5 @@
+import { Book } from "interfaces";
+
 export async function fetchData(endPoint: string) {
   try {
     const response = await fetch(endPoint);
@@ -69,9 +71,20 @@ export const saveJSON = (key: string, value: any) => {
   localStorage.setItem(key, value);
 };
 
-type className = string | boolean;
+type className = string | boolean | undefined | null;
 
 export const clsx = (...args: className[]) => {
   const classes = args.filter((value) => value).join(" ");
   return classes;
+};
+
+export const getSearchString = (book: Book) => {
+  const authors = (book.authors || []).join(" ");
+  const categories = (book.categories || []).join(" ");
+  const title = book.title ?? "";
+  const price = book?.published?.price ?? 0;
+  const isbn = book.isbn ?? "";
+  const searchString =
+    `${authors} ${categories} ${title} ${price} ${isbn}`.toLowerCase();
+  return searchString;
 };

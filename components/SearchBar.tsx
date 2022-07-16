@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { useRef } from "react";
 import { InputActionMeta, SingleValue, StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
-import { LOCAL_STORAGE } from "utils/constant";
-import { extractJSON, fetchData } from "utils/helpers";
+import { LOCAL_STORAGE, TEXT } from "utils/constant";
+import { extractJSON, fetchData, getSearchString } from "utils/helpers";
 
 interface BookOption {
   value: string;
@@ -31,12 +31,8 @@ const SearchBar = () => {
           }
           const options = (books || [])
             .filter((item) => {
-              const searchString = `${item.title.toLocaleLowerCase()} ${item.authors
-                .join(" ")
-                .toLocaleLowerCase()} ${item.isbn} ${item.categories
-                .join(" ")
-                .toLocaleLowerCase()} ${item.published.price || ""}`;
-              return searchString.includes(inputValue);
+              const searchString = getSearchString(item);
+              return searchString.includes(inputValue.toLowerCase());
             })
             .map((item) => ({
               value: item.title,
@@ -108,7 +104,7 @@ const SearchBar = () => {
       loadOptions={loadOptions}
       onChange={handleChange}
       styles={customStyles}
-      placeholder="Search Books..."
+      placeholder={TEXT.SEARCH_BOOKS}
       isClearable
       onInputChange={handleInputChange}
     />

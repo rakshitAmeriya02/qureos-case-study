@@ -4,7 +4,8 @@ import Card from "components/Card";
 import Layout from "components/Layout";
 import Loader from "components/Loader";
 import { useBooks } from "hooks/useBooks";
-import Pagination from "./Pagination";
+import Pagination from "../ui-core/Pagination";
+import { getSearchString } from "utils/helpers";
 
 const Home = () => {
   const router = useRouter();
@@ -17,12 +18,8 @@ const Home = () => {
       const searchInput = query.trim();
       if (searchInput) {
         return books.filter((item) => {
-          const searchString = `${item.title.toLocaleLowerCase()} ${item.authors
-            .join(" ")
-            .toLocaleLowerCase()} ${item.isbn} ${item.categories
-            .join(" ")
-            .toLocaleLowerCase()} ${item.published.price || ""}`;
-          return searchString.includes(searchInput);
+          const searchString = getSearchString(item);
+          return searchString.includes(searchInput.toLowerCase());
         });
       }
     }

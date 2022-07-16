@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { TEXT } from "utils/constant";
 import { clsx } from "utils/helpers";
 
 interface PaginationProps {
@@ -50,7 +51,7 @@ const Pagination = ({ activePage = 1, totalPages }: PaginationProps) => {
         disabled={activePage === 1}
         onClick={() => handleChange("prev")}
       >
-        Previous
+        {TEXT.PREVIOUS}
       </button>
       <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg cursor-not-allowed">
         {activePage}
@@ -63,7 +64,7 @@ const Pagination = ({ activePage = 1, totalPages }: PaginationProps) => {
         disabled={activePage === totalPages}
         onClick={() => handleChange("next")}
       >
-        Next
+        {TEXT.NEXT}
       </button>
     </div>
   );

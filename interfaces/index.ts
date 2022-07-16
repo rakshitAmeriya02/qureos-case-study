@@ -6,15 +6,15 @@ interface Published {
 
 export interface Book {
   title: string;
-  isbn: string;
-  pageCount: number;
-  published: Published;
-  thumbnailUrl: string;
-  shortDescription: string;
-  longDescription: string;
-  status: string;
-  authors: string[];
-  categories: string[];
+  isbn: string | null;
+  pageCount: number | null;
+  published?: Published | null;
+  thumbnailUrl: string | null;
+  shortDescription: string | null;
+  longDescription: string | null;
+  status: string | null;
+  authors: string[] | null;
+  categories: string[] | null;
 }
 
 export interface BooksCache {
