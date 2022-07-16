@@ -42,7 +42,7 @@ const LazyImage = ({ alt, hideNoContentText, src }: LazyImageProps) => {
       <img
         className={clsx(
           "flex-1 block w-full h-auto rounded-t-lg",
-          !loaded && "invisible"
+          !loaded && "absolute invisible top-0"
         )}
         alt={alt}
         onError={() => setShowErrorImg(true)}
@@ -50,7 +50,7 @@ const LazyImage = ({ alt, hideNoContentText, src }: LazyImageProps) => {
         onLoad={() => setLoaded(true)}
       />
       <ImagePlaceHolder
-        className={!loaded ? "absolute visible top-0" : "hidden"}
+        className={!loaded ? "visible" : "hidden"}
         hideNoContentText={hideNoContentText}
       />
     </div>
