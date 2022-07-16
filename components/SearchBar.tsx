@@ -1,6 +1,6 @@
 import { Book } from "interfaces";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { InputActionMeta, SingleValue, StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
 import { LOCAL_STORAGE, TEXT } from "utils/constant";
@@ -15,6 +15,7 @@ const SearchBar = () => {
   const router = useRouter();
   const timoutRef = useRef<NodeJS.Timeout | null>(null);
   const inputValue = decodeURI((router.query.query as string) || "");
+  const [options, setOptions] = useState<BookOption[]>([]);
 
   const loadOptions = (inputValue: string): Promise<BookOption[]> => {
     return new Promise((resolve) => {
@@ -38,9 +39,11 @@ const SearchBar = () => {
               value: item.title,
               label: item.title,
             }));
+          setOptions(options);
           resolve(options);
         } catch (error) {
           console.log("ERROR:", { error });
+          setOptions([]);
           resolve([]);
         }
       }, 1000);
@@ -100,6 +103,7 @@ const SearchBar = () => {
   return (
     <AsyncSelect
       cacheOptions
+      defaultOptions={options}
       inputValue={inputValue}
       loadOptions={loadOptions}
       onChange={handleChange}
