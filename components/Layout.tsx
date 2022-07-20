@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderBar from "./HeaderBar";
+import HeaderBar from "@/components/HeaderBar";
 
 interface LayoutProps {
   children: React.ReactNode;

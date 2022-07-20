@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Book, BooksCache } from "interfaces";
-import { extractJSON, fetchData, saveJSON } from "utils/helpers";
-import { API_ENDPOINT, LOCAL_STORAGE } from "utils/constant";
 import { useRouter } from "next/router";
+import { Book, BooksCache } from "@/interfaces";
+import { extractJSON, fetchData, saveJSON } from "@/utils/helpers";
+import { API_ENDPOINT, LOCAL_STORAGE } from "@/utils/constant";
 
 type BooksData = Book[] | null;
 type TotalPagesCount = number;
@@ -15,7 +15,7 @@ export const useBooks = (): [BooksData, TotalPagesCount] => {
   // fetches books data if not already present in the cache
   useEffect(() => {
     const fetchBooksData = async () => {
-      const page = router.query.page ? Number(router.query.page) : 1;
+      const page = router?.query?.page ? Number(router.query.page) : 1;
       const books = await fetchData(API_ENDPOINT);
       const cacheData: BooksCache =
         extractJSON(LOCAL_STORAGE.BOOKS_CACHE) || {};
@@ -24,7 +24,7 @@ export const useBooks = (): [BooksData, TotalPagesCount] => {
       setBooks(books || []);
     };
     if (window) {
-      const page = router.query.page ? Number(router.query.page) : 1;
+      const page = router?.query?.page ? Number(router.query.page) : 1;
       const cacheData: BooksCache = extractJSON(LOCAL_STORAGE.BOOKS_CACHE);
       if (!cacheData) {
         fetchBooksData();
@@ -37,7 +37,7 @@ export const useBooks = (): [BooksData, TotalPagesCount] => {
         }
       }
     }
-  }, [router.query?.page]);
+  }, [router?.query?.page]);
 
   return [books, totalPages];
 };

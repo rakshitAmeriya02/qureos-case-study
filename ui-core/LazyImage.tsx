@@ -1,7 +1,7 @@
-import BookIcon from "components/BookIcon";
 import React, { useState } from "react";
-import { TEXT } from "utils/constant";
-import { clsx } from "utils/helpers";
+import BookIcon from "@/components/BookIcon";
+import { TEXT } from "@/utils/constant";
+import { clsx } from "@/utils/helpers";
 
 interface LazyImageProps extends ImagePlaceHolderProps {
   alt?: string;

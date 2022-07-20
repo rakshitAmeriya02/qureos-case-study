@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { useBooks } from "hooks/useBooks";
-import Layout from "components/Layout";
-import Loader from "components/Loader";
-import LazyImage from "ui-core/LazyImage";
-import { TEXT } from "utils/constant";
-import Button from "ui-core/Button";
+import { useRouter } from "next/router";
+import { useBooks } from "@/hooks/useBooks";
+import Layout from "@/components/Layout";
+import Loader from "@/components/Loader";
+import LazyImage from "@/ui-core/LazyImage";
+import { TEXT } from "@/utils/constant";
+import Button from "@/ui-core/Button";
 
 const BookDetail = () => {
   const router = useRouter();

@@ -1,5 +1,5 @@
 import React from "react";
-import { clsx } from "utils/helpers";
+import { clsx } from "@/utils/helpers";
 
 interface ButtonProps {
   children?: React.ReactNode;

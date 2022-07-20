@@ -1,10 +1,10 @@
-import { Book } from "interfaces";
-import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import { useRouter } from "next/router";
 import { InputActionMeta, SingleValue, StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
-import { LOCAL_STORAGE, TEXT } from "utils/constant";
-import { extractJSON, fetchData, getSearchString } from "utils/helpers";
+import { LOCAL_STORAGE, TEXT } from "@/utils/constant";
+import { extractJSON, fetchData, getSearchString } from "@/utils/helpers";
+import { Book } from "@/interfaces";
 
 interface BookOption {
   value: string;
@@ -14,7 +14,7 @@ interface BookOption {
 const SearchBar = () => {
   const router = useRouter();
   const timoutRef = useRef<NodeJS.Timeout | null>(null);
-  const inputValue = decodeURI((router.query.query as string) || "");
+  const inputValue = decodeURI((router?.query?.query as string) || "");
   const [options, setOptions] = useState<BookOption[]>([]);
 
   const loadOptions = (inputValue: string): Promise<BookOption[]> => {

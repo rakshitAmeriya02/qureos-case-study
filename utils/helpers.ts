@@ -1,4 +1,4 @@
-import { Book } from "interfaces";
+import { Book } from "@/interfaces";
 
 export async function fetchData(endPoint: string) {
   try {

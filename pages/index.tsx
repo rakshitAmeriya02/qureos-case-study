@@ -1,17 +1,17 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
-import Card from "components/Card";
-import Layout from "components/Layout";
-import Loader from "components/Loader";
-import { useBooks } from "hooks/useBooks";
-import Pagination from "../ui-core/Pagination";
-import { getSearchString } from "utils/helpers";
+import Card from "@/components/Card";
+import Layout from "@/components/Layout";
+import Loader from "@/components/Loader";
+import { useBooks } from "@/hooks/useBooks";
+import Pagination from "@/ui-core/Pagination";
+import { getSearchString } from "@/utils/helpers";
 
 const Home = () => {
   const router = useRouter();
-  const query = (router.query.query || "") as string;
+  const query = (router?.query?.query || "") as string;
   const [books, totalPages] = useBooks();
-  const page = router.query.page ? Number(router.query.page) : 1;
+  const page = router?.query?.page ? Number(router.query.page) : 1;
 
   const filteredBooks = useMemo(() => {
     if (books) {

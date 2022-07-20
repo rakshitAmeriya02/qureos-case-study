@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import React from "react";
-import { TEXT } from "utils/constant";
-import { clsx } from "utils/helpers";
+import { useRouter } from "next/router";
+import { TEXT } from "@/utils/constant";
+import { clsx } from "@/utils/helpers";
 
 interface PaginationProps {
   activePage?: number;

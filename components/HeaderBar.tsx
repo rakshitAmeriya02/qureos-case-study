@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import Button from "ui-core/Button";
-import { TEXT } from "utils/constant";
-import SearchBar from "./SearchBar";
+import Button from "@/ui-core/Button";
+import SearchBar from "@/components/SearchBar";
+import { TEXT } from "@/utils/constant";
 
 const HeaderBar = () => {
   const router = useRouter();

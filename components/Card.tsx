@@ -1,8 +1,8 @@
-import { Book } from "interfaces";
 import { useRouter } from "next/router";
-import Button from "ui-core/Button";
-import LazyImage from "ui-core/LazyImage";
-import { formatCurrency, getFormattedDate } from "utils/helpers";
+import Button from "@/ui-core/Button";
+import LazyImage from "@/ui-core/LazyImage";
+import { Book } from "@/interfaces";
+import { formatCurrency, getFormattedDate } from "@/utils/helpers";
 
 interface CardProps {
   book: Book;
