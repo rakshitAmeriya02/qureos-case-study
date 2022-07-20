@@ -19,6 +19,7 @@ const ImagePlaceHolder = ({
 }: ImagePlaceHolderProps) => {
   return (
     <div
+      data-testid="book-icon"
       className={clsx(
         "flex flex-col items-center justify-center flex-1",
         className
@@ -50,7 +51,7 @@ const LazyImage = ({ alt, hideNoContentText, src }: LazyImageProps) => {
         onLoad={() => setLoaded(true)}
       />
       <ImagePlaceHolder
-        className={!loaded ? "visible" : "hidden"}
+        className={(!loaded) ? "visible" : "hidden"}
         hideNoContentText={hideNoContentText}
       />
     </div>

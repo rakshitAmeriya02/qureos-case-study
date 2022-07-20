@@ -1,9 +1,10 @@
 import { Book } from "@/interfaces";
+import axios from "axios";
 
 export async function fetchData(endPoint: string) {
   try {
-    const response = await fetch(endPoint);
-    const json = await response.json();
+    const response = await axios.get(endPoint);
+    const json = await response.data;
     return json;
   } catch (error) {
     console.log("ERROR:", { error });

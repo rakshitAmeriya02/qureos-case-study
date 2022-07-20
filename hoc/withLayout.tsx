@@ -6,7 +6,10 @@ const withLayout = (WrappedComponent: React.ComponentType) => {
     return (
       <div className="flex flex-col h-full">
         <HeaderBar />
-        <div className="flex-1 p-4 overflow-y-auto">
+        <div
+          style={{ overflow: "auto" }}
+          className="flex-1 p-4 overflow-y-auto"
+        >
           <WrappedComponent {...props} />
         </div>
       </div>
